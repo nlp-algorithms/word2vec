@@ -40,7 +40,7 @@ class Preprocesser:
             positive_interval = min([len(tokens), index + 1 + self.context_window])
             behind_center_word = tokens[negative_interval:index]
             after_center_word = (
-                tokens[index + 1 : positive_interval] if index + 1 < len(tokens) else []
+                tokens[index + 1 : positive_interval]
             )
 
             self.vocabulary[token].append(
@@ -48,6 +48,7 @@ class Preprocesser:
                     token, behind_center_word, after_center_word, filename, index
                 )
             )
+
 
     def read_file(self, filename):
         with open(filename) as f:
@@ -69,4 +70,5 @@ class Preprocesser:
         for filename in files:
             self.read_file(f"{self.directory}{filename}")
         logging.info("Finished generating vocabulary. Saving to disk as output.")
+        self.save_vocab()
 
